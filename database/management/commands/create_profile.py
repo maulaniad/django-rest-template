@@ -1,0 +1,40 @@
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand, CommandParser
+from django.db.transaction import atomic
+
+from database.models.user import Profile
+
+
+class Command(BaseCommand):
+    help = "Create a new profile following the User ID"
+
+    def add_arguments(self, parser: CommandParser):
+        parser.add_argument("user_id", nargs="*")
+
+    @atomic
+    def handle(self, *args, **options):
+        user_id = options.get('user_id', None)
+
+        if not user_id:
+            self.stdout.write(self.style.WARNING("User ID Cannot be Empty!"))
+            return
+
+        user_id = int(user_id[0])
+        user_object = User.objects.filter(id=user_id).first()
+
+        if not user_object:
+            self.stdout.write(self.style.WARNING("User ID Not Found!"))
+            return
+
+        name = input("Enter Name: ")
+        email = input("Enter Email: ")
+
+        new_profile = Profile.objects.create(
+            name=name, email=email, user=user_object
+        )
+
+        user_object.first_name = new_profile.name
+        user_object.email = new_profile.email
+        user_object.save()
+
+        self.stdout.write(self.style.SUCCESS("Success Created a new Profile"))
