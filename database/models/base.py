@@ -29,7 +29,7 @@ class BaseModel(Model):
     date_updated = DateTimeField(auto_now=True)
     date_deleted = DateTimeField(null=True)
 
-    objects = CustomManager['BaseModel']()
+    objects: CustomManager['BaseModel'] = CustomManager['BaseModel']()  # type: ignore
 
     class Meta:
         abstract = True
