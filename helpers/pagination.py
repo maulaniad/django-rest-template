@@ -13,8 +13,8 @@ class StandardPagination(PageNumberPagination):
     max_page_size = 1000
 
     def get_paginated_response(self, data):
-        page_size: int | Any = self.get_page_size(self.request)
-        data_count = self.page.paginator.count
+        page_size: int | Any = self.get_page_size(self.request) if self.request else 0
+        data_count = self.page.paginator.count if self.page else 0
 
         return Response({
             'pagination': True,
@@ -22,7 +22,7 @@ class StandardPagination(PageNumberPagination):
             'meta': {
                 'next': self.get_next_link(),
                 'prev': self.get_previous_link(),
-                'page_current': self.page.number,
+                'page_current': self.page.number if self.page else 0,
                 'page_total': ceil(data_count / page_size),
                 'page_size': page_size,
                 'data_count': data_count,

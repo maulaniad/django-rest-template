@@ -78,10 +78,10 @@ class Cache:
         return cache.has_key(key, version)
 
 
-def cache_view(key_prefix: str, timeout=900, variation_headers: Iterable[str] | None = None):
+def cache_view(key_prefix: str, timeout: int =900, variation_headers: Iterable[str] | None = None):
     """Decorator for caching the entire view response."""
 
-    def wrapper(view_func):
+    def wrapper(view_func: Any):
         decorated_func = method_decorator(cache_page(timeout, key_prefix=key_prefix))(view_func)
 
         if variation_headers:

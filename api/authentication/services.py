@@ -3,6 +3,7 @@ from typing import Any
 from database.data.user import UserData
 from database.data.profile import ProfileData
 
+
 class AuthService:
     repo = UserData()
 

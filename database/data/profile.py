@@ -8,9 +8,7 @@ class ProfileData:
         return Profile.objects.select_related('user').all()
 
     def get_profile(self, id_or_oid: int | str):
-        return Profile.objects.filter(
-            Q(id=id_or_oid) | Q(oid=id_or_oid)
-        ).select_related('user').first()
+        return Profile.objects.filter(Q(id=id_or_oid) | Q(oid=id_or_oid)).select_related('user').first()
 
     def get_profile_by_user_id(self, user_id: int):
         return Profile.objects.filter(user=user_id).select_related('user').first()
