@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandParser
 from django.db.transaction import atomic
 
-from database.models.user import Profile
+from database.models.profile import Profile
 
 
 class Command(BaseCommand):
