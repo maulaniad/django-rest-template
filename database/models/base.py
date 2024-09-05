@@ -6,9 +6,9 @@ from django.utils import timezone
 from helpers.utils import generate_oid
 
 
-T = TypeVar('T', bound='BaseModel')
+_TT = TypeVar('_TT', bound='BaseModel')
 
-class CustomQuerySet(QuerySet, Generic[T]):
+class CustomQuerySet(QuerySet, Generic[_TT]):
     def first(self) -> Optional[Self]:
         return super().first()
 
@@ -16,23 +16,23 @@ class CustomQuerySet(QuerySet, Generic[T]):
         return super().get(*args, **kwargs)
 
 
-class CustomManager(Manager, Generic[T]):
-    def get_queryset(self) -> QuerySet[T] | CustomQuerySet[T]:
+class CustomManager(Generic[_TT], Manager[_TT]):
+    def get_queryset(self) -> QuerySet[_TT] | CustomQuerySet[_TT]:
         return super().get_queryset().filter(date_deleted__isnull=True)
 
-    def all_with_deleted(self) -> QuerySet[T]:
+    def all_with_deleted(self) -> QuerySet[_TT]:
         """Fetch all objects from the database including soft-deleted ones."""
         return super().get_queryset()
 
-    def deleted_only(self) -> QuerySet[T]:
+    def deleted_only(self) -> QuerySet[_TT]:
         """Fetch only soft-deleted objects from the database."""
         return super().get_queryset().filter(date_deleted__isnull=False)
 
-    def create(self, **kwargs: Any) -> T:
+    def create(self, **kwargs: Any) -> _TT:
         """Create a new object and save it to the database."""
         return super().create(**kwargs)
 
-    def bulk_create(self, objects: Iterable[Any], batch_size: int | Any = ..., ignore_conflicts: bool | Any = ..., update_conflicts: bool | Any = ..., update_fields: Sequence[str] | Any = ..., unique_fields: Sequence[str] | Any = ...) -> list[T]:
+    def bulk_create(self, objects: Iterable[Any], batch_size: int | Any = ..., ignore_conflicts: bool | Any = ..., update_conflicts: bool | Any = ..., update_fields: Sequence[str] | Any = ..., unique_fields: Sequence[str] | Any = ...) -> list[_TT]:
         """Bulk create objects and save them to the database."""
         return super().bulk_create(objects, batch_size, ignore_conflicts, update_conflicts, update_fields, unique_fields)
 
