@@ -5,7 +5,7 @@ from rest_framework.serializers import (ALL_FIELDS,
                                         IntegerField,
                                         DecimalField)
 
-from database.models.profile import Profile
+from database.models import Profile
 
 
 class LoginPayloadSerializer(Serializer):

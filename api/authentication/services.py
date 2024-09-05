@@ -1,11 +1,10 @@
 from typing import Any
 
-from database.data.user import UserData
-from database.data.profile import ProfileData
+from database.repositories import ProfileRepo, UserRepo
 
 
 class AuthService:
-    repo = UserData()
+    repo = UserRepo()
 
     def login(self, data: dict[str, Any] | Any) -> tuple[Any, str | None]:
         username = data.get('username', None)
@@ -23,7 +22,7 @@ class AuthService:
 
 
 class ProfileService:
-    repo = ProfileData()
+    repo = ProfileRepo()
 
     def create_new_profile(self, data: dict[str, Any] | Any) -> tuple[Any, str | None]:
         data = self.repo.create_profile(**data)

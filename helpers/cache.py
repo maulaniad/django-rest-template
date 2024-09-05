@@ -1,4 +1,4 @@
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from django.core.cache import cache
 from django.utils.decorators import method_decorator
@@ -78,10 +78,10 @@ class Cache:
         return cache.has_key(key, version)
 
 
-def cache_view(key_prefix: str, timeout: int =900, variation_headers: Iterable[str] | None = None):
+def cache_view(key_prefix: str, timeout: int = 900, variation_headers: Iterable[str] | None = None) -> Callable:
     """Decorator for caching the entire view response."""
 
-    def wrapper(view_func: Any):
+    def wrapper(view_func: Callable) -> Any:
         decorated_func = method_decorator(cache_page(timeout, key_prefix=key_prefix))(view_func)
 
         if variation_headers:
