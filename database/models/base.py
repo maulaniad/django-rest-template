@@ -40,6 +40,18 @@ class CustomManager(Generic[_TT], Manager[_TT]):
         """Bulk update objects and save them to the database."""
         return super().bulk_update(objects, fields, batch_size)
 
+    def delete(self):
+        """Soft deletes data safely by marking the deleted date on the objects."""
+        return super().update(date_deleted=timezone.now())
+
+    def hard_delete(self):
+        """Wipes data from the database."""
+        return super().delete()
+
+    def restore(self):
+        """Undo soft deletions, nullifying the deleted date on the objects."""
+        return super().update(date_deleted=None)
+
 
 class BaseModel(Model):
     id = BigAutoField(primary_key=True)
@@ -53,16 +65,17 @@ class BaseModel(Model):
     class Meta:
         abstract = True
 
-    def delete(self, using=None, keep_parents=False):
+    def delete(self, using: str = "default"):
         """Safe deletion through a soft-delete, marked with a deleted date."""
         self.date_deleted = timezone.now()
-        self.save()
+        self.save(using=using)
+        return self
 
-    def hard_delete(self):
-        """The real deletion, wiping data from the database."""
-        super().delete()
+    def hard_delete(self, using: str = "default", keep_parents: bool = False):
+        """The real deletion, wiping the data from database."""
+        super().delete(using=using, keep_parents=keep_parents)
 
-    def restore(self):
-        """Undo a soft-delete, nullifying the deleted date"""
+    def restore(self, using: str = "default"):
+        """Undo a soft-delete, nullifying the deleted date."""
         self.date_deleted = None
-        self.save()
+        self.save(using=using)
