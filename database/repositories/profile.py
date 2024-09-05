@@ -3,7 +3,7 @@ from django.db.models import Q
 from database.models import Profile
 
 
-class ProfileData:
+class ProfileRepo:
     def get_profiles(self):
         return Profile.objects.select_related('user').all()
 

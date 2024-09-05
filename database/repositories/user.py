@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 
 
-class UserData:
+class UserRepo:
     def get_users(self):
         return User.objects.all().select_related('profile')
 
