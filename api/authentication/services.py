@@ -1,6 +1,13 @@
-from typing import Any
+from jwt import encode
+from typing import Any, cast
 
-from database.repositories import ProfileRepo, UserRepo
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.utils.timezone import now, timedelta
+
+from core.serializers import UserDataSerializer
+from database.repositories import UserRepo
 
 
 class AuthService:
@@ -9,21 +16,20 @@ class AuthService:
     def login(self, data: dict[str, Any] | Any) -> tuple[Any, str | None]:
         username = data.get('username', None)
         password = data.get('password', None)
+        time = now()
 
-        user_registered = self.repo.get_user_by_username(username)
-
-        if not user_registered:
+        user_data = cast(User | None, authenticate(request=None, username=username, password=password))
+        if not user_data:
             return None, "User not found"
 
-        if not user_registered.check_password(password):
-            return None, "Wrong password"
+        serializer = UserDataSerializer(user_data)
+        encoded_token = encode(
+            {
+                **serializer.data,
+                'exp': time + timedelta(hours=settings.JWT_EXP_HOURS, microseconds=time.microsecond),
+            },
+            key=settings.SECRET_KEY,
+            algorithm=settings.JWT_ALGORITHM
+        )
 
-        return None, None
-
-
-class ProfileService:
-    repo = ProfileRepo()
-
-    def create_new_profile(self, data: dict[str, Any] | Any) -> tuple[Any, str | None]:
-        data = self.repo.create_profile(**data)
-        return data, None
+        return encoded_token, None

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "drf_standardized_errors",
 
     "api",
+    "core",
     "database",
     "middleware",
     "tasks",
@@ -160,8 +161,12 @@ SESSION_CACHE_ALIAS = "default"
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
+    "core.authentication.AuthenticationBackend",
 ]
+
+JWT_ALGORITHM = "HS256"
+
+JWT_EXP_HOURS = 24
 
 
 # Password validation
