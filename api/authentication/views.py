@@ -1,6 +1,6 @@
 from rest_framework.generics import GenericAPIView
 
-from api.authentication.serializers import (LoginPayloadSerializer)
+from api.authentication.serializers import LoginPayloadSerializer
 from api.authentication.services import AuthService
 from helpers import HttpError, Request, Response
 
