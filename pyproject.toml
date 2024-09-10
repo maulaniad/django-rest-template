@@ -33,6 +33,12 @@ djangorestframework-stubs = "^3.15.0"
 rich = "^13.7.1"
 ruff = "^0.5.5"
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+indent-style = "space"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
