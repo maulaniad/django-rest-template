@@ -50,9 +50,7 @@ class JWTAuthentication(BaseAuthentication):
             token = auth_header.split(" ")[1]
             payload = decode(token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
 
-            user = self.repo.manager().filter(
-                username=payload['username']
-            ).select_related('profile').first()
+            user = self.repo.get_user_by_username(username=payload['username'])
 
             if not user:
                 raise HttpError._404_("User not found")
