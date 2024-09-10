@@ -19,4 +19,4 @@ class LoginView(GenericAPIView):
         if error:
             raise HttpError._400_(error)
 
-        return Response({'token': token})
+        return Response({'token': token}, message="Authenticated")
