@@ -23,3 +23,6 @@ class ProfileRepo:
         )
 
         return data
+
+    def manager(self):
+        return Profile.objects

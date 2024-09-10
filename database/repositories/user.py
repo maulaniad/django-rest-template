@@ -16,3 +16,6 @@ class UserRepo:
 
     def get_user_by_username(self, username: str):
         return User.objects.filter(username=username).first()
+
+    def manager(self):
+        return User.objects
