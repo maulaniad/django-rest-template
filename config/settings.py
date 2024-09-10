@@ -18,7 +18,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+# Quick-start development settings
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -92,9 +92,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ["helpers.response.ResponseRenderer"],
     'EXCEPTION_HANDLER': "drf_standardized_errors.handler.exception_handler",
-    'DEFAULT_VERSIONING_CLASS': "rest_framework.versioning.QueryParameterVersioning",
+    'DEFAULT_VERSIONING_CLASS': "core.api_versioning.APIVersioning",
     'DEFAULT_VERSION': "v1",
-    'VERSION_PARAM': "version",
 }
 
 
@@ -109,7 +108,7 @@ DRF_STANDARDIZED_ERRORS = {
 # Celery
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-broker_url
 
-CELERY_TIMEZONE = "Asia/Jakarta"
+CELERY_TIMEZONE = config('DJANGO_TIMEZONE', default="Asia/Jakarta", cast=str)
 
 CELERY_BROKER_URL = config('REDIS_URL', default="redis://localhost:6379/0")
 
