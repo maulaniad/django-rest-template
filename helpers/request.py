@@ -4,6 +4,16 @@ from django.http import QueryDict
 from rest_framework.request import Request as _Req
 
 
+def _user_model_():
+    from django.contrib.auth.models import User as _User
+    from database.models.profile import Profile
+
+    class User(_User):
+        profile: Profile
+
+    return User
+
+
 class Request(_Req):
     """
     Custom Request class to help with type annotations which was absent in rest_framework.
@@ -13,3 +23,7 @@ class Request(_Req):
     def data(self) -> Union[dict[str, Any], QueryDict]:
         current_data: dict[str, Any] | QueryDict = super().data  # type: ignore
         return current_data
+
+    @property
+    def user(self):
+        return _user_model_()
