@@ -92,6 +92,9 @@ WSGI_APPLICATION = "config.wsgi.application"
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ["helpers.response.ResponseRenderer"],
     'EXCEPTION_HANDLER': "drf_standardized_errors.handler.exception_handler",
+    'DEFAULT_VERSIONING_CLASS': "rest_framework.versioning.QueryParameterVersioning",
+    'DEFAULT_VERSION': "v1",
+    'VERSION_PARAM': "version",
 }
 
 
