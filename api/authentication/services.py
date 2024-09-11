@@ -1,9 +1,8 @@
 from jwt import encode
-from typing import Any, cast
+from typing import Any
 
 from django.conf import settings
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
 
 from api.authentication.serializers import UserDataSerializer
@@ -18,7 +17,7 @@ class AuthService:
         password = data.get('password', None)
         time = now()
 
-        user_data = cast(User | None, authenticate(request=None, username=username, password=password))
+        user_data = authenticate(request=None, username=username, password=password)
         if not user_data:
             return None, "User not found"
 
