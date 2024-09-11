@@ -13,42 +13,42 @@ class Cache:
     """
 
     @staticmethod
-    def get(key: str, default: Any | None = None, version: int | None = None):
+    def get(key: str, default: Any | None = None, version: int | None = None) -> Any:
         """Fetch a given key from the cache."""
         return cache.get(key, default, version)
 
     @staticmethod
-    def get_many(keys: Iterable[str], version: int | None = None):
+    def get_many(keys: Iterable[str], version: int | None = None) -> dict[str, int | str]:
         """Fetch a bunch of keys from the cache at once."""
         return cache.get_many(keys, version=version)
 
     @staticmethod
-    def get_or_set(key: str, potential_value: Any, version: int | None = None):
+    def get_or_set(key: str, potential_value: Any, version: int | None = None) -> Any | None:
         """Fetch a given key from the cache. If the key does not exist, set it."""
         return cache.get_or_set(key, default=potential_value, version=version)
 
     @staticmethod
-    def set(key: str, value: Any, version: int | None = None):
+    def set(key: str, value: Any, version: int | None = None) -> None:
         """Set a value in the cache."""
         return cache.set(key, value, version=version)
 
     @staticmethod
-    def set_many(data: dict[str, Any], version: int | None = None):
+    def set_many(data: dict[str, Any], version: int | None = None) -> list[Any]:
         """Set a bunch of values in the cache at once from a dict of key/value pairs."""
         return cache.set_many(data, version=version)
 
     @staticmethod
-    def delete(key: str, version: int | None = None) -> Any:
+    def delete(key: str, version: int | None = None) -> None:
         """Delete a given key from the cache."""
         return cache.delete(key, version)
 
     @staticmethod
-    def delete_many(keys: Iterable[str], version: int | None = None) -> Any:
+    def delete_many(keys: Iterable[str], version: int | None = None) -> None:
         """Delete a bunch of keys from the cache at once."""
         return cache.delete_many(keys, version=version)
 
     @staticmethod
-    def delete_pattern(pattern: str, itersize: int = 100_000) -> Any:
+    def delete_pattern(pattern: str, itersize: int = 100_000) -> None:
         """Deletes all cache entries that match the specified pattern."""
         return cache.delete_pattern(pattern, itersize=itersize)  # type: ignore
 
@@ -73,7 +73,7 @@ class Cache:
         return list(cache.iter_keys(pattern))                    # type: ignore
 
     @staticmethod
-    def has_key(key: str, version: int | None = None) -> Any:
+    def has_key(key: str, version: int | None = None) -> bool:
         """Return True if the key is in the cache and has not expired."""
         return cache.has_key(key, version)
 
