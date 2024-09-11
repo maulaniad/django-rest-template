@@ -10,8 +10,8 @@ from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.request import Request
 
-from helpers.exception import HttpError
 from database.repositories import UserRepo
+from helpers import HttpError
 
 
 class AuthenticationBackend(BaseBackend):
