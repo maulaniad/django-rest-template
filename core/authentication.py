@@ -28,7 +28,7 @@ class AuthenticationBackend(BaseBackend):
             return None
 
         if not check_password(password, user_data.password):
-            raise HttpError._400_("Wrong password")
+            raise HttpError._400_("Invalid credentials")
 
         if not user_data.is_active:
             raise HttpError._401_("User is not active")
@@ -52,7 +52,7 @@ class JWTAuthentication(BaseAuthentication):
 
             user = self.repo.get_user_by_username(username=payload['username'])
             if not user:
-                raise HttpError._404_("User not found")
+                raise HttpError._401_("User not registered")
 
             request.user = user
         except ExpiredSignatureError:
