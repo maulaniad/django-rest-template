@@ -42,7 +42,6 @@ class ResponseRenderer(JSONRenderer):
             'status': renderer_context['response'].status_code,
             'success': True,
             'message': data['message'],
-            'error': None,
             'data': data['data']
         }
 

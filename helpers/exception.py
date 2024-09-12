@@ -29,7 +29,6 @@ class StandardExceptionFormatter(ExceptionFormatter):
             'success': False,
             'message': f"{e_detl}{e_attr}",
             'error': error_response.type,
-            'data': None
         }
 
 
@@ -66,7 +65,6 @@ def handler_404(request, exception):
             'success': False,
             'message': f"Resource {request.path} was not found on the server.",
             'error': "invalid_url",
-            'data': None
         }, status=404
     )
 
@@ -78,6 +76,5 @@ def handler_500(request):
             'success': False,
             'message': "Internal Server Error.",
             'error': "internal_server_error",
-            'data': None
         }, status=500
     )
