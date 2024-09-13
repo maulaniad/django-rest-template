@@ -28,7 +28,7 @@ class AuthenticationBackend(BaseBackend):
             return None
 
         if not check_password(password, user_data.password):
-            raise HttpError._400_("Invalid credentials")
+            return None
 
         if not user_data.is_active:
             raise HttpError._401_("User is not active")
