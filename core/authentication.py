@@ -17,7 +17,7 @@ from helpers import HttpError
 class AuthenticationBackend(BaseBackend):
     repo = UserRepo
 
-    def authenticate(self, request: HttpRequest | None = None, username=None, password=None, **kwargs):
+    def authenticate(self, request: HttpRequest, username=None, password=None, **kwargs):
         if not username or not password:
             raise HttpError._400_("Username and password are required to login")
 
