@@ -3,19 +3,24 @@ from django.db.models import Q
 
 
 class UserRepo:
-    def get_users(self):
+    @staticmethod
+    def get_users():
         return User.objects.all().select_related('profile')
 
-    def get_user(self, id_or_oid: int | str):
+    @staticmethod
+    def get_user(id_or_oid: int | str):
         return User.objects.filter(
             Q(id=id_or_oid) | Q(oid=id_or_oid)
         ).select_related('profile').first()
 
-    def get_user_by_email(self, email: str):
+    @staticmethod
+    def get_user_by_email(email: str):
         return User.objects.filter(email=email).first()
 
-    def get_user_by_username(self, username: str):
+    @staticmethod
+    def get_user_by_username(username: str):
         return User.objects.filter(username=username).first()
 
-    def manager(self):
+    @staticmethod
+    def manager():
         return User.objects

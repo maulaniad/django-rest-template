@@ -7,7 +7,7 @@ from helpers import HttpError, Request, Response
 
 
 class LoginView(GenericAPIView):
-    service = AuthService()
+    service = AuthService
 
     def post(self, request: Request, *args, **kwargs):
         payload = LoginPayloadSerializer(data=request.data)
@@ -25,7 +25,7 @@ class LoginView(GenericAPIView):
 
 class RefreshTokenView(GenericAPIView):
     authentication_classes = [JWTAuthentication]
-    service = AuthService()
+    service = AuthService
 
     def get(self, request: Request, *args, **kwargs):
         token, error = self.service.refresh_token(request)

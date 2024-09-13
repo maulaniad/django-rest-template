@@ -15,7 +15,7 @@ from helpers import HttpError
 
 
 class AuthenticationBackend(BaseBackend):
-    repo = UserRepo()
+    repo = UserRepo
 
     def authenticate(self, request: HttpRequest | None = None, username=None, password=None, **kwargs):
         if not username or not password:
@@ -39,7 +39,7 @@ class AuthenticationBackend(BaseBackend):
 
 
 class JWTAuthentication(BaseAuthentication):
-    repo = UserRepo()
+    repo = UserRepo
 
     def authenticate(self, request: Request) -> tuple[Any, Any] | None:
         auth_header = request.headers.get('Authorization', None)
