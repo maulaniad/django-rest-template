@@ -3,15 +3,13 @@ from typing import Any
 from django.contrib.auth import authenticate
 
 from api.authentication.serializers import UserDataSerializer
-from database.repositories import UserRepo
 from helpers import Request
 from helpers.utils import generate_token
 
 
 class AuthService:
-    repo = UserRepo()
-
-    def login(self, data: dict[str, Any]) -> tuple[str | Any, str | None]:
+    @staticmethod
+    def login(data: dict[str, Any]) -> tuple[str | Any, str | None]:
         username = data.get('username', None)
         password = data.get('password', None)
 
@@ -24,7 +22,8 @@ class AuthService:
 
         return encoded_token, None
 
-    def refresh_token(self, request: Request) -> tuple[str | Any, str | None]:
+    @staticmethod
+    def refresh_token(request: Request) -> tuple[str | Any, str | None]:
         if not request.user.is_authenticated:
             return None, "User not authenticated"
 
