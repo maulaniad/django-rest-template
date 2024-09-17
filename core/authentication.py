@@ -31,7 +31,7 @@ class AuthenticationBackend(BaseBackend):
             return None
 
         if not user_data.is_active:
-            raise HttpError._401_("User is not active")
+            return None
 
         user_data.last_login = timezone.now()
         user_data.save()
