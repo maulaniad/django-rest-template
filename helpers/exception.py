@@ -1,3 +1,5 @@
+from typing import Any, Iterable
+
 from django.http import JsonResponse
 from drf_standardized_errors.formatter import ExceptionFormatter
 from drf_standardized_errors.types import ErrorResponse
@@ -21,13 +23,13 @@ class StandardExceptionFormatter(ExceptionFormatter):
         """Beautify the error response."""
 
         e = error_response.errors[0]
-        e_detl = f"{e.detail.strip('.')}"
-        e_attr = f": {e.attr}" if e.attr else ""
+        e_detail = f"{e.detail.strip('.')}"
+        e_attribute = f": {e.attr}" if e.attr else ""
 
         return {
             'status': self.exc.status_code,
             'success': False,
-            'message': f"{e_detl}{e_attr}",
+            'message': f"{e_detail}{e_attribute}",
             'error': error_response.type,
         }
 
@@ -36,26 +38,41 @@ class HttpError(APIException):
     """
     Custom HTTP error class to be raised on which will be caught by Standardized Response.
     """
+    status_code = 500
+    default_detail = "Internal Server Error"
+    default_code = "internal_server_error"
 
-    def __init__(self, status_code: int, detail: str):
-        """
-        Should not be used directly. Use the attributes instead.
+    @staticmethod
+    def _400_(detail: Iterable[Any] | str):
+        return ValidationError(detail)
 
-        Example:
-        >>> raise HttpError._400_("Bad Request")
-        >>> raise HttpError._404_("Not Found")
-        """
+    @staticmethod
+    def _401_(detail: Iterable[Any] | str):
+        return NotAuthenticated(detail)
 
-        assert self.__class__ != HttpError, "HttpError class should not be used directly."
+    @staticmethod
+    def _403_(detail: Iterable[Any] | str):
+        return PermissionDenied(detail)
 
-    _400_ = ValidationError
-    _401_ = NotAuthenticated
-    _403_ = PermissionDenied
-    _404_ = NotFound
-    _405_ = MethodNotAllowed
-    _406_ = NotAcceptable
-    _415_ = UnsupportedMediaType
-    _429_ = Throttled
+    @staticmethod
+    def _404_(detail: Iterable[Any] | str):
+        return NotFound(detail)
+
+    @staticmethod
+    def _405_(method: str, detail: Iterable[Any] | str):
+        return MethodNotAllowed(method, detail)
+
+    @staticmethod
+    def _406_(detail: Iterable[Any] | str):
+        return NotAcceptable(detail)
+
+    @staticmethod
+    def _415_(media_type: str, detail: Iterable[Any] | str):
+        return UnsupportedMediaType(media_type, detail)
+
+    @staticmethod
+    def _429_(wait: float, detail: Iterable[Any] | str):
+        return Throttled(wait, detail)
 
 
 def handler_404(request, exception):
