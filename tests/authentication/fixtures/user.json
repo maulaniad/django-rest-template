@@ -1,0 +1,162 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "mameng.galuh",
+      "email": "maulani.ad@gmail.com",
+      "first_name": "Mameng",
+      "last_name": "Galuh",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:48.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "rahmat.hidayat",
+      "email": "rahmat@gmail.com",
+      "first_name": "Rahmat",
+      "last_name": "Hidayat",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:49.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "siti.aisyah",
+      "email": "siti.aisyah@gmail.com",
+      "first_name": "Siti",
+      "last_name": "Aisyah",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:50.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "muhammad.ali",
+      "email": "muhammad.ali@gmail.com",
+      "first_name": "Muhammad",
+      "last_name": "Ali",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:51.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "rina.wulandari",
+      "email": "rina.wulandari@gmail.com",
+      "first_name": "Rina",
+      "last_name": "Wulandari",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:52.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "dewi.sri",
+      "email": "dewi.sri@gmail.com",
+      "first_name": "Dewi",
+      "last_name": "Sri",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:53.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "username": "arief.budiman",
+      "email": "arief.budiman@gmail.com",
+      "first_name": "Arief",
+      "last_name": "Budiman",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:54.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "username": "siti.nurhaliza",
+      "email": "siti.nurhaliza@gmail.com",
+      "first_name": "Siti",
+      "last_name": "Nurhaliza",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:55.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+      "username": "rahmat.hidayatullah",
+      "email": "rahmat.hidayatullah@gmail.com",
+      "first_name": "Rahmat",
+      "last_name": "Hidayatullah",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:56.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+      "username": "dewi.sri.wahyuni",
+      "email": "dewi.sri.wahyuni@gmail.com",
+      "first_name": "Dewi",
+      "last_name": "Sri Wahyuni",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2024-09-10T03:43:57.996Z",
+      "password": "scrypt$16384$xD2lh28pMBODdRemoaRJ3x$8$5$IAMidmkr+tljoW5YyeFf/zF7IHsBcxu2MADGBBvibQyKWC0EPyq64GtvudICIj9pu4JfE7q6rC1SWnGhu8oySg=="
+    }
+  }
+]
