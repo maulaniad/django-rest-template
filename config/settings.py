@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from decouple import config
+from importlib.util import find_spec
 from pathlib import Path
 
 
@@ -234,6 +235,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 FILE_HANDLER = "logging.FileHandler"
 
+if find_spec('rich'):
+    CONSOLE_LOGGER_CLASS = "rich.logging.RichHandler"
+else:
+    CONSOLE_LOGGER_CLASS = "logging.StreamHandler"
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -250,7 +256,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'level': "INFO",
-            'class': "rich.logging.RichHandler",
+            'class': CONSOLE_LOGGER_CLASS,
             'formatter': "simple",
         },
         'file': {
