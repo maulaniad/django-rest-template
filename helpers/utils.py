@@ -20,7 +20,8 @@ def generate_token(data: dict[str, Any] | ReturnDict[str, Any]):
     encoded_token = encode(
         {
             **data,
-            'exp': time + timedelta(hours=settings.JWT_EXP_HOURS, microseconds=time.microsecond),
+            'exp': (time + timedelta(hours=settings.JWT_EXP_HOURS)).timestamp(),
+            'iat': time.timestamp()
         },
         key=settings.SECRET_KEY,
         algorithm=settings.JWT_ALGORITHM
