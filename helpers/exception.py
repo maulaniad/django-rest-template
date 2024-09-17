@@ -5,13 +5,12 @@ from drf_standardized_errors.formatter import ExceptionFormatter
 from drf_standardized_errors.types import ErrorResponse
 from rest_framework.exceptions import (MethodNotAllowed,
                                        NotAcceptable,
-                                       NotAuthenticated,
                                        NotFound,
+                                       AuthenticationFailed,
                                        PermissionDenied,
                                        ValidationError,
                                        UnsupportedMediaType,
-                                       Throttled,
-                                       APIException)
+                                       Throttled)
 
 
 class StandardExceptionFormatter(ExceptionFormatter):
@@ -34,21 +33,17 @@ class StandardExceptionFormatter(ExceptionFormatter):
         }
 
 
-class HttpError(APIException):
+class HttpError:
     """
     Custom HTTP error class to be raised on which will be caught by Standardized Response.
     """
-    status_code = 500
-    default_detail = "Internal Server Error"
-    default_code = "internal_server_error"
-
     @staticmethod
     def _400_(detail: Iterable[Any] | str):
         return ValidationError(detail)
 
     @staticmethod
     def _401_(detail: Iterable[Any] | str):
-        return NotAuthenticated(detail)
+        return AuthenticationFailed(detail)
 
     @staticmethod
     def _403_(detail: Iterable[Any] | str):
