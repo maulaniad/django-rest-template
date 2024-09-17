@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+PROJECT_NAME = config('PROJECT_NAME', default="Django REST Framework API", cast=str)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
@@ -300,6 +302,12 @@ LOGGING = {
         }
     },
 }
+
+
+# Testing
+# https://docs.djangoproject.com/en/5.1/topics/testing/
+
+TEST_RUNNER = "tests.test_runner.TestRunner"
 
 
 # Sentry
