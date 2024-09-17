@@ -1,7 +1,6 @@
 from decouple import config
 
-from rest_framework.test import APITestCase, APIClient
-
+from tests import APITestCase, APIClient
 from tests.authentication.fixtures import AUTHENTICATION_FIXTURES
 from tests.authentication.endpoints import AuthenticationEndpoints
 
