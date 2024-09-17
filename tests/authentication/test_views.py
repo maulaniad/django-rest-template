@@ -1,18 +1,13 @@
 from decouple import config
-from os.path import dirname, join
 
 from rest_framework.test import APITestCase, APIClient
 
+from tests.authentication.fixtures import AUTHENTICATION_FIXTURES
 from tests.authentication.endpoints import AuthenticationEndpoints
 
 
-CURRENT_DIR = dirname(__file__)
-
 class TestAuthenticationViews(APITestCase):
-    fixtures = [
-        join(CURRENT_DIR, "fixtures/user.json"),
-        join(CURRENT_DIR, "fixtures/profile.json"),
-    ]
+    fixtures = AUTHENTICATION_FIXTURES
 
     def setUp(self) -> None:
         self.client = APIClient()
@@ -32,7 +27,7 @@ class TestAuthenticationViews(APITestCase):
             format="json"
         )
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200, msg="Login should succeed with valid credentials")
 
     def test_login_failure_with_invalid_username(self):
         response = self.client.post(
@@ -44,7 +39,7 @@ class TestAuthenticationViews(APITestCase):
             format="json"
         )
 
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 401, msg="Login should fail with invalid username")
 
     def test_login_failure_with_invalid_password(self):
         response = self.client.post(
@@ -56,7 +51,7 @@ class TestAuthenticationViews(APITestCase):
             format="json"
         )
 
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 401, msg="Login should fail with invalid password")
 
     def test_refresh_token(self):
         response = self.client.post(
@@ -73,4 +68,4 @@ class TestAuthenticationViews(APITestCase):
         )
         refreshed_token = response.data['data']['token']
 
-        self.assertNotEqual(original_token, refreshed_token)
+        self.assertNotEqual(original_token, refreshed_token, msg="Token should be refreshed as long as the original is still valid")
