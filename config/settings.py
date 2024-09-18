@@ -92,6 +92,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
+# Append URL Slash
+# https://docs.djangoproject.com/en/5.1/ref/settings/#append-slash
+
+APPEND_SLASH = True
+
+
 # Django REST Framework
 # https://www.django-rest-framework.org/tutorial/quickstart/
 
