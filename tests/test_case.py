@@ -1,9 +1,11 @@
-from logging import getLogger
+from logging import disable, CRITICAL
+from rich import print
+from shutil import get_terminal_size
 
 from rest_framework.test import APITestCase as _APITestCase
 
 
-logger = getLogger(__name__)
+disable(CRITICAL)
 
 class APITestCase(_APITestCase):
     fixtures = []
@@ -17,13 +19,20 @@ class APITestCase(_APITestCase):
 
         errors = self._get_error_list(test_result.errors)
         failures = self._get_error_list(test_result.failures)
+        width = get_terminal_size().columns
 
         if errors:
-            logger.error(f">> {self._testMethodName}: ERROR")
+            status = "[red]ERROR[/red]"
+            width -= 1
         elif failures:
-            logger.warning(f">> {self._testMethodName}: FAIL")
+            status =  "[orange]FAIL[/orange]"
+            width -= 1
         else:
-            logger.info(f">> {self._testMethodName}: PASS")
+            status = "[green]PASS[/green]"
+
+        print("=" * width)
+        print(f">> {status}\t{self._testMethodName}")
+        print("=" * width)
 
     def _get_error_list(self, error_list):
         current_test = self._testMethodName
