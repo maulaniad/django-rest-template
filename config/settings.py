@@ -103,6 +103,7 @@ APPEND_SLASH = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ["rest_framework.authentication.BasicAuthentication"],
+    'DEFAULT_PERMISSION_CLASSES': ["rest_framework.permissions.AllowAny"],
     'DEFAULT_RENDERER_CLASSES': ["helpers.response.ResponseRenderer"],
     'EXCEPTION_HANDLER': "drf_standardized_errors.handler.exception_handler",
     'DEFAULT_VERSIONING_CLASS': "core.api_versioning.APIVersioning",
