@@ -62,4 +62,4 @@ class JWTAuthentication(BaseAuthentication):
         except IndexError:
             raise HttpError._400_("Invalid Bearer token format")
 
-        return (request.user, None)
+        return request.user, None
