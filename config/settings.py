@@ -34,6 +34,14 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.spl
 
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(",")])
 
+SECURE_SSL_REDIRECT = config('ENABLE_HTTPS', default=False, cast=bool)
+
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+X_FRAME_OPTIONS = "DENY"
+
 
 # Application definition
 
@@ -146,6 +154,7 @@ CACHES = {
             'PARSER_CLASS': "redis.connection._HiredisParser",
             'COMPRESSOR': "django_redis.compressors.lz4.Lz4Compressor",
         },
+        'KEY_PREFIX': PROJECT_NAME,
     }
 }
 
@@ -172,6 +181,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 SESSION_CACHE_ALIAS = "default"
 
+SESSION_COOKIE_AGE = 604800
 
 # Authentication and authorization
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/
