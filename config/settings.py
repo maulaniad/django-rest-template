@@ -187,6 +187,7 @@ SESSION_COOKIE_AGE = 604800
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/
 
 AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
     "core.authentication.AuthenticationBackend",
 ]
 
