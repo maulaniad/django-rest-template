@@ -183,6 +183,7 @@ SESSION_CACHE_ALIAS = "default"
 
 SESSION_COOKIE_AGE = 604800
 
+
 # Authentication and authorization
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/
 
