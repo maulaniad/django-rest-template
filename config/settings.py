@@ -168,7 +168,7 @@ DATABASES = {
 # Session
 # https://docs.djangoproject.com/en/5.1/topics/http/sessions/
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 SESSION_CACHE_ALIAS = "default"
 
