@@ -1,6 +1,7 @@
+from django.conf import settings
 from rest_framework.generics import GenericAPIView
 
-from api.authentication.serializers import LoginPayloadSerializer
+from api.authentication.serializers import LoginPayloadSerializer, VerifyOTPPayloadSerializer
 from api.authentication.services import AuthService
 from core.authentication import JWTAuthentication
 from helpers import HttpError, Request, Response
@@ -15,8 +16,14 @@ class LoginView(GenericAPIView):
         if not payload.is_valid():
             raise HttpError._400_(payload.errors)
 
-        token, error = self.service.login(payload.data)
+        if settings.OTP_AUTH:
+            access_id, error = self.service.create_otp(payload.data)
+            if error:
+                raise HttpError._500_(error)
 
+            return Response({'access_id': access_id}, message="OTP has been sent to your email")
+
+        token, error = self.service.login(payload.data)
         if error:
             raise HttpError._401_(error)
 
@@ -34,3 +41,19 @@ class RefreshTokenView(GenericAPIView):
             raise HttpError._401_(error)
 
         return Response({'token': token}, message="Token Refreshed")
+
+
+class VerifyOTPView(GenericAPIView):
+    service = AuthService
+
+    def post(self, request: Request, *args, **kwargs):
+        payload = VerifyOTPPayloadSerializer(data=request.data)
+
+        if not payload.is_valid():
+            raise HttpError._400_(payload.errors)
+
+        token, error = self.service.verify_otp(data=payload.data)
+        if error:
+            raise HttpError._401_(error)
+
+        return Response({'token': token}, message="OTP Verified")
