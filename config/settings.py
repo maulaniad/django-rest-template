@@ -192,6 +192,8 @@ AUTHENTICATION_BACKENDS = [
     "core.authentication.AuthenticationBackend",
 ]
 
+OTP_AUTH = config('OTP_AUTH', default=False, cast=bool)
+
 JWT_ALGORITHM = "HS256"
 
 JWT_EXP_HOURS = 2
@@ -214,6 +216,26 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
+
+
+# Mailing
+# https://docs.djangoproject.com/en/5.1/topics/email/
+
+EMAIL_BACKEND = config('DJANGO_EMAIL_BACKEND', default="django.core.mail.backends.console.EmailBackend", cast=str)
+
+EMAIL_HOST = config('DJANGO_EMAIL_HOST', default="localhost", cast=str)
+
+EMAIL_PORT = config('DJANGO_EMAIL_PORT', default=25, cast=int)
+
+EMAIL_HOST_USER = config('DJANGO_EMAIL_HOST_USER', default="", cast=str)
+
+EMAIL_HOST_PASSWORD = config('DJANGO_EMAIL_HOST_PASSWORD', default="", cast=str)
+
+EMAIL_USE_TLS = config('DJANGO_EMAIL_USE_TLS', default=False, cast=bool)
+
+EMAIL_USE_SSL = config('DJANGO_EMAIL_USE_SSL', default=False, cast=bool)
+
+DEFAULT_FROM_EMAIL = config('DJANGO_DEFAULT_FROM_EMAIL', default="no-reply@localhost", cast=str)
 
 
 # Internationalization
