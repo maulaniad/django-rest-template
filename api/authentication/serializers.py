@@ -1,4 +1,8 @@
-from rest_framework.serializers import Serializer, CharField, BooleanField, DateTimeField
+from rest_framework.serializers import (Serializer,
+                                        BooleanField,
+                                        CharField,
+                                        DateTimeField,
+                                        IntegerField)
 
 
 class LoginPayloadSerializer(Serializer):
@@ -21,3 +25,8 @@ class UserDataSerializer(Serializer):
     is_active = BooleanField(default=True)
     last_login = DateTimeField(allow_null=True)
     profile = UserProfileDataSerializer()
+
+
+class VerifyOTPPayloadSerializer(Serializer):
+    access_id = CharField(max_length=21, required=True)
+    otp = IntegerField(required=True)
