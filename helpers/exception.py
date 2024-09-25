@@ -10,7 +10,8 @@ from rest_framework.exceptions import (MethodNotAllowed,
                                        PermissionDenied,
                                        ValidationError,
                                        UnsupportedMediaType,
-                                       Throttled)
+                                       Throttled,
+                                       APIException)
 
 
 class StandardExceptionFormatter(ExceptionFormatter):
@@ -68,6 +69,13 @@ class HttpError:
     @staticmethod
     def _429_(wait: float, detail: Iterable[Any] | str):
         return Throttled(wait, detail)
+
+    @staticmethod
+    def _500_(detail: Iterable[Any] | str):
+        internal_server_error = APIException(detail)
+        internal_server_error.status_code = 500
+        internal_server_error.default_code = "internal_server_error"
+        return internal_server_error
 
 
 def handler_404(request, exception):
