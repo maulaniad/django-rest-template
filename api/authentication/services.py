@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.conf import settings
+
 from api.authentication.serializers import UserDataSerializer
 from core.authentication import authenticate
 from helpers import Cache, Request
@@ -46,7 +48,14 @@ class AuthService:
         otp_code = generate_otp()
 
         Cache.set(f"token_{user_data.profile.oid}_{otp_code}", encoded_token)
-        Cache.set(f"otp_{user_data.profile.oid}", otp_code)
+        Cache.set(
+            f"otp_{user_data.profile.oid}",
+            {
+                'otp': otp_code,
+                'token': encoded_token,
+                'retries': 0
+            }
+        )
 
         message = EmailMessage(
             subject="One Time Password - Django REST Framework",
@@ -61,14 +70,17 @@ class AuthService:
         access_id = data.get('access_id', None)
         otp_code = data.get('otp', None)
 
-        cached_otp = Cache.get(f"otp_{access_id}")
-        if cached_otp != otp_code:
-            return False, "Invalid One Time Password"
-
-        token = Cache.get(f"token_{access_id}_{cached_otp}")
-        if not token:
+        cached_data = Cache.get(f"otp_{access_id}")
+        if not cached_data:
             return None, "OTP has expired, please try again"
 
+        if cached_data['retries'] >= settings.OTP_MAX_RETRIES:
+            return False, "Max retries reached, please try again"
+
+        if cached_data['otp'] != otp_code:
+            cached_data['retries'] += 1
+            Cache.set(f"otp_{access_id}", cached_data)
+            return False, "Invalid One Time Password"
+
         Cache.delete(f"otp_{access_id}")
-        Cache.delete(f"token_{access_id}_{cached_otp}")
-        return token, None
+        return cached_data['token'], None
