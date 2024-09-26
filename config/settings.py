@@ -194,6 +194,8 @@ AUTHENTICATION_BACKENDS = [
 
 OTP_AUTH = config('OTP_AUTH', default=False, cast=bool)
 
+OTP_MAX_RETRIES = 3
+
 JWT_ALGORITHM = "HS256"
 
 JWT_EXP_HOURS = 2
