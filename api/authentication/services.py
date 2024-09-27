@@ -75,12 +75,12 @@ class AuthService:
             return None, "OTP has expired, please try again"
 
         if cached_data['retries'] >= settings.OTP_MAX_RETRIES:
-            return False, "Max retries reached, please try again"
+            return None, "Max retries reached, please try login again"
 
         if cached_data['otp'] != otp_code:
             cached_data['retries'] += 1
             Cache.set(f"otp_{access_id}", cached_data)
-            return False, "Invalid One Time Password"
+            return None, "Invalid One Time Password"
 
         Cache.delete(f"otp_{access_id}")
         return cached_data['token'], None
