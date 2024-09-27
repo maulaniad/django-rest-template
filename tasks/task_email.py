@@ -1,6 +1,6 @@
 from celery import Task, shared_task
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, send_mass_mail
 
 
 Task.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls) # type: ignore[attr-defined]
@@ -17,6 +17,20 @@ def task_send_email(self: Task, subject: str, body: str, from_email: str | None,
             recipient_list=to,
             fail_silently=fail_silently
         )
+    except Exception as e:
+        self.update_state(state="FAILURE", meta={'exc': str(e)})
+        return False
+
+    self.update_state(state="SUCCESS", meta={})
+    return True
+
+
+@shared_task(bind=True)
+def task_send_mass_email(self: Task, datatuple: list[tuple[str, str, str, list[str]]], fail_silently: bool = False):
+    self.update_state(state="RUNNING", meta={})
+
+    try:
+        send_mass_mail(datatuple, fail_silently=fail_silently)
     except Exception as e:
         self.update_state(state="FAILURE", meta={'exc': str(e)})
         return False
