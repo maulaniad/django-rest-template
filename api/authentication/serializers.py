@@ -5,9 +5,14 @@ from rest_framework.serializers import (Serializer,
                                         IntegerField)
 
 
-class LoginPayloadSerializer(Serializer):
+class ValidateLoginPayload(Serializer):
     username = CharField(max_length=50, required=True)
     password = CharField(required=True)
+
+
+class ValidateVerifyOTPPayload(Serializer):
+    access_id = CharField(max_length=21, required=True)
+    otp = IntegerField(required=True)
 
 
 class UserProfileDataSerializer(Serializer):
@@ -25,8 +30,3 @@ class UserDataSerializer(Serializer):
     is_active = BooleanField(default=True)
     last_login = DateTimeField(allow_null=True)
     profile = UserProfileDataSerializer()
-
-
-class VerifyOTPPayloadSerializer(Serializer):
-    access_id = CharField(max_length=21, required=True)
-    otp = IntegerField(required=True)

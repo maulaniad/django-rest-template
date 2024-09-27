@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework.generics import GenericAPIView
 
-from api.authentication.serializers import LoginPayloadSerializer, VerifyOTPPayloadSerializer
+from api.authentication.serializers import ValidateLoginPayload, ValidateVerifyOTPPayload
 from api.authentication.services import AuthService
 from core.authentication import JWTAuthentication
 from helpers import HttpError, Request, Response
@@ -11,7 +11,7 @@ class LoginView(GenericAPIView):
     service = AuthService
 
     def post(self, request: Request, *args, **kwargs):
-        payload = LoginPayloadSerializer(data=request.data)
+        payload = ValidateLoginPayload(data=request.data)
 
         if not payload.is_valid():
             raise HttpError._400_(payload.errors)
@@ -36,7 +36,6 @@ class RefreshTokenView(GenericAPIView):
 
     def get(self, request: Request, *args, **kwargs):
         token, error = self.service.refresh_token(request)
-
         if error:
             raise HttpError._401_(error)
 
@@ -47,7 +46,7 @@ class VerifyOTPView(GenericAPIView):
     service = AuthService
 
     def post(self, request: Request, *args, **kwargs):
-        payload = VerifyOTPPayloadSerializer(data=request.data)
+        payload = ValidateVerifyOTPPayload(data=request.data)
 
         if not payload.is_valid():
             raise HttpError._400_(payload.errors)
