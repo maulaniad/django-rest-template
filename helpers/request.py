@@ -5,12 +5,7 @@ from rest_framework.request import Request as _Req
 
 
 def _user_model_():
-    from django.contrib.auth.models import User as _User
-    from database.models.profile import Profile
-
-    class User(_User):
-        profile: Profile
-
+    from database.models import User
     return User
 
 

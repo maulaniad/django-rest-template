@@ -4,7 +4,6 @@ from typing import Any, cast
 from django.conf import settings
 from django.contrib.auth import authenticate as _authenticate
 from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.models import User as _User
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 from django.http import HttpRequest
@@ -12,13 +11,9 @@ from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.request import Request
 
-from database.models.profile import Profile
+from database.models import User
 from database.repositories import UserRepo
 from helpers import HttpError
-
-
-class User(_User):
-    profile: Profile
 
 
 def authenticate(request: Request | None, **credentials) -> User | None:
