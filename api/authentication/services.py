@@ -35,7 +35,7 @@ class AuthService:
         return encoded_token, None
 
     @staticmethod
-    def create_otp(data: dict[str, Any]) -> tuple[int | Any, str | None]:
+    def create_otp(data: dict[str, Any]) -> tuple[str | Any, str | None]:
         username = data.get('username', None)
         password = data.get('password', None)
 
