@@ -1,5 +1,4 @@
 from rest_framework.serializers import (Serializer,
-                                        ModelSerializer,
                                         BooleanField,
                                         CharField,
                                         DateTimeField,
@@ -16,7 +15,7 @@ class ValidateVerifyOTPPayload(Serializer):
     otp = IntegerField(required=True)
 
 
-class ProfileDataSerializer(ModelSerializer):
+class ProfileDataSerializer(Serializer):
     oid = CharField(max_length=21)
     date_created = DateTimeField()
     date_updated = DateTimeField()
@@ -25,7 +24,7 @@ class ProfileDataSerializer(ModelSerializer):
     phone = CharField(max_length=15, allow_blank=True)
 
 
-class UserDataSerializer(ModelSerializer):
+class UserDataSerializer(Serializer):
     username = CharField(max_length=50, required=True)
     email = CharField(max_length=50, required=True)
     is_active = BooleanField(default=True)
