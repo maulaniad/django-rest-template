@@ -1,5 +1,9 @@
 from decouple import config
 
+from django.conf import settings
+
+from helpers import Cache
+
 from tests import APITestCase, APIClient
 from tests.authentication.fixtures import AUTHENTICATION_FIXTURES
 from tests.authentication.endpoints import AuthenticationEndpoints
@@ -15,8 +19,10 @@ class TestAuthenticationViews(APITestCase):
             'username': config("TEST_USERNAME", default=None),
             'password': config("TEST_PASSWORD", default=None),
         }
+        settings.OTP_AUTH = False
 
     def tearDown(self) -> None:
+        Cache.delete_pattern("otp_*")
         return super().tearDown()
 
     def test_login_success_with_valid_credentials(self):
@@ -68,3 +74,23 @@ class TestAuthenticationViews(APITestCase):
         refreshed_token = response.data['data']['token']
 
         self.assertNotEqual(original_token, refreshed_token, msg="Token should be refreshed as long as the original is still valid")
+
+    def test_otp_should_be_verifiable(self):
+        settings.OTP_AUTH = True
+
+        login_res = self.client.post(
+            self.endpoints.login,
+            data=self.user_data,
+            format="json"
+        )
+
+        verify_otp_res = self.client.post(
+            self.endpoints.verify_otp,
+            data={
+                'access_id': login_res.data['data']['access_id'],
+                'otp': Cache.get(f"otp_{login_res.data['data']['access_id']}")['otp'],
+            },
+            format="json"
+        )
+
+        self.assertEqual(verify_otp_res.status_code, 200, msg="OTP should be verifiable")
