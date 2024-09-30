@@ -7,19 +7,25 @@ from helpers import Cache
 from tests import APITestCase, APIClient
 from tests.authentication.fixtures import AUTHENTICATION_FIXTURES
 from tests.authentication.endpoints import AuthenticationEndpoints
+from unittest.mock import patch
 
 
 class TestAuthenticationViews(APITestCase):
     fixtures = AUTHENTICATION_FIXTURES
 
     def setUp(self) -> None:
+        settings.OTP_AUTH = False
+        settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+
         self.client = APIClient()
         self.endpoints = AuthenticationEndpoints()
         self.user_data = {
             'username': config("TEST_USERNAME", default=None),
             'password': config("TEST_PASSWORD", default=None),
         }
-        settings.OTP_AUTH = False
+        self.patcher = patch("celery.app.task.Task.delay")
+        self.mock_celery = self.patcher.start()
+        return super().setUp()
 
     def tearDown(self) -> None:
         Cache.delete_pattern("otp_*")
